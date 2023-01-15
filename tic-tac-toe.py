@@ -22,20 +22,25 @@ class TicTacToe:
             
     def Check_board_win(self, player):
         #检查横竖斜是否成功
-        if [[self.board[i][j] != player or self.board[j][i] != player or 
-             self.board[i][i] != player or self.board[i][3 - i] 
-             for j in range(3)] for i in range(3)]:
-            True
-        else:
-            False
-            
+        for i in range(3):
+            if len([True for j in range(3) if self.board[i][j] == player]) == 3:
+                return True 
+            elif len([True for j in range(3) if self.board[j][i] == player]) == 3:
+                return True
+            elif len([True for j in range(3) if self.board[j][j] == player]) == 3:
+                return True
+            elif len([True for j in range(3) if self.board[j][2 - j] == player]) == 3:
+                return True
+        return False
+        
     def Check_board_filled(self):
-        #检查棋子是否满盘
-        if[[self.board[i][j] != '-' for j in range[3]] for i in range[3]]:
-            True
-        else:
-            False
-               
+        #检查棋子是否满盘1
+        for i in range(3):
+            for j in range(3):
+                if self.board[i][j] == '-':
+                    return False
+        return True
+
     def Game(self):
         """
         印出九宫格
@@ -50,34 +55,38 @@ class TicTacToe:
         赢/输
         上局未开头玩家下局开头
         """
+        #初始化棋盘和玩家
         self.board = [['-' for j in range(3)] for i in range(3)]
+        player = "X" if random.randint(0, 1) == 0 else "O"
         self.Print_board()
-        print("Welcome to Game")
+        print("Welcome to Game!")
         
         while True:
-            #随机选玩家并提示输入
-            player = "X" if random.randint(0, 1) == 0 else "O"
-            x = list((map(int, input(f"Player {player} turn" + "(please type in x and y position using comma in between):").split(","))))
-            self.board[x[0]][x[1]] = player
-            
+            #提示玩家输入
+            x = list(map(int, input(f"Player {player} turn" + "(please type in x and y position using comma in between):").split(",")))
+            if self.board[x[0] - 1][x[1] - 1] == '-':
+                self.board[x[0] - 1][x[1] - 1] = player
+            else:
+                while self.board[x[0] - 1][x[1] - 1] != '-':
+                    x = list(map(int, input(f"Space already occupied" + "(please type in another x and y position using comma in between):").split(",")))
+                self.board[x[0] - 1][x[1] - 1] = player
+
             ##上传玩家输出
             self.Print_board()
             
             #检查结果
-            self.Check_board_win(player)
-            if self.Check_board_win(player):
-                print(f"Congradulations Player {player}, you win the Game!")
-                False
-            if self.Check_board_filled():
-                print("Draw \n Board is filled")
-                False
+            if self.Check_board_win(player) == True:
+                print(f"Congratulations Player {player}, you win the Game!")
+                return False
+            if self.Check_board_filled() == True and self.Check_board_win(player) == False:
+                print("Draw\nBoard is filled")
+                return False
                 
             #玩家互换
             # player = "X" if player == "O" else player = "O"
             # 应该这样做
             player = "X" if player == "O" else "O"
             
-
 A_Game = TicTacToe()
 A_Game.Game()
                   
