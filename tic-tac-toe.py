@@ -44,8 +44,15 @@ class TicTacToe:
         print("Welcome to Game")
         
         while True:
-            print([(j, sep=(' ')) for j in row] for i in self.board) 
+            # print([[(j, sep=(' ')) for j in row] for i in self.board)
             #为什么不行？
+            # sep 似乎只能在纯print里使用，不能这么操作。而且，你要用两个[],你这里调动了两个loop。最后，这种操作最好是define的时候用，print就别偷懒了
+            # 你是想这样做？
+            for i in self.board:
+                for j in self.board:
+                    print(self.board[i][j], end=" ")
+                print("\n")
+            
         
             #随机选玩家并提示下棋
             if random.randint(0,1) == 0: 
@@ -69,7 +76,9 @@ class TicTacToe:
                 False
                 
             #玩家互换
-            player = "X" if player == "O" else player = "O"
+            # player = "X" if player == "O" else player = "O"
+            # 应该这样做
+            player = "X" if player == "O" else "O"
 
 A_Game = TicTacToe()
 A_Game.Game()
