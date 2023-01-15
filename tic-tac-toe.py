@@ -91,10 +91,15 @@ class TicTacToe:
             
     def Check_board_filled(self):
         #检查棋子是否满盘
-        if[[self.board[i][j] != '-' for j in range[3]] for i in range[3]]:
-            True
-        else:
-            False
+        for i in range(3):
+            if len([True for j in range(3) if self.board[i][j] == "-"]) == 3:
+                return False
+        return True
+                
+        # if [[self.board[i][j] != '-' for j in range[3]] for i in range[3]]:
+        #     return True
+        # else:
+        #     return False
                
     def Game(self):
         """
