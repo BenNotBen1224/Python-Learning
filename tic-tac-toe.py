@@ -1,4 +1,5 @@
-import random #很tm重要
+import random
+from turtle import right #很tm重要
 
 class TicTacToe:
     ##  修改之前的代码
@@ -21,13 +22,72 @@ class TicTacToe:
                 print("\n")
             
     def Check_board_win(self, player):
-        #检查横竖斜是否成功
-        if [[self.board[i][j] != player or self.board[j][i] != player or 
-             self.board[i][i] != player or self.board[i][3 - i] 
-             for j in range(3)] for i in range(3)]:
-            True
-        else:
-            False
+        # #检查横竖斜是否成功
+                
+        # if [[self.board[i][j] != player or self.board[j][i] != player or 
+        #      self.board[i][i] != player or self.board[i][3 - i] 
+        #      for j in range(3)] for i in range(3)]:
+        #     True
+        # else:
+        #     False
+            
+        # # 检查横竖
+        # for i in range(3):
+        #     for j in range(3):
+        #         if self.board[i][j]
+                
+        """
+        检查斜杠
+        """
+        
+        # \
+        left_diagonal_count = 0
+        # /
+        right_diagonal_count = 0
+        for i in range(3):
+            # 检查左斜杠 /
+            if self.board[i][i] == player:
+                diagonal_count += 1
+            # 检查右斜杠 \
+            if self.board[i][abs(i-2)] == player:
+                diagonal_count += 1
+        
+        # 如果任何一条杠全都被同一个玩家填满了就返回True，因为有赢家了。
+        if left_diagonal_count == 3 or right_diagonal_count == 3:
+            return True
+        
+        """
+        下面是非要用 [] + loop 的方式
+        """
+        # if len([True for i in range(3) if self.board[i][i] == player]) == 3:
+        #     return True
+        # if len([True for i in range(3) if self.board[i][abs(i-2)] == player]) == 3:
+        #     return True
+        
+        # 如果任何一条杠全都被同一个玩家填满了就返回True，因为有赢家了。
+        if left_diagonal_count == 3 or right_diagonal_count == 3:
+            return True
+        
+        """
+        检查横竖
+        """
+        horizontal_counts = 0
+        vertical_counts = 0
+        
+        for i in range(3):
+            for j in range(3):
+                if self.board[i][j] == player:
+                    horizontal_counts += 1
+                if self.board[j][i] == player:
+                    vertical_counts += 1
+                    
+            if horizontal_counts == 3:
+                return True
+            elif horizontal_counts == 3:
+                return True
+            
+        return False
+    
             
     def Check_board_filled(self):
         #检查棋子是否满盘
