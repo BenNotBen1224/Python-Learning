@@ -4,33 +4,50 @@ import keyboard
 class RockPaperScissors:
     
     def __init__(self):
-        print("Welcome to Game!")
+        
+        self.List = ["Rock", "Paper", "Scissor"]
     
     def Check_Who_Wins(self, player1, player2):
-        List = ["Rock", "Paper", "Scissor"]
+        
+        
+        for i in range(2):
+            if(player1 == self.List[i+1] and player2 == self.List[i]):
+                print("Player 1 Wins!")
+                break
+            if(player1 == self.List[i] and player2 == self.List[i+1]):
+                print("Player 2 Wins!")
+                break
+            else:
+                print("Draw, play again.")
+                player1 = player2 = ''
+
+        """
+        if((player1 == "Rock" and player2 == "Scissor") or
+           (player1 == "Scissor" and player2 == "Paper") or
+           (player1 == "")
+           )
+           """
         
     def Game(self):
+        """
+        随机挑选玩家
+        提示并记录玩家输入
+        X Vs. Y
+        判断输赢
+            如输、赢，结束游戏
+            如打平，继续游戏
+        输出结果
+        """
+        print("Welcome to Game!")
+        print(self.List)
         
-        self.__init__()
+                
+                
+A_Game = RockPaperScissors()
+A_Game.Game()
         
-        #记录玩家输入
-        player1 = 'X' if random.randint(0, 1) == 0 else 'Y'
-        A = input("{player1}'s turn (make sure no other player is watching):")
-        player2 = 'X' if player1 == 'Y' else 'X'
-        B = input("{player2}'s turn (make sure no other player is watching):")
-        
-        #显示玩家输入
-        print(A + "Vs." + B)
-        if keyboard.is_pressed(' '):
-           Check_Who_Wins(self, player1, player2)
+               
+           
             
         
-    """
-    随机挑选玩家
-    提示并记录玩家输入
-    X Vs. Y
-    判断输赢
-        如赢，结束游戏
-        如输，继续游戏
-    输出结果
-    """
+    

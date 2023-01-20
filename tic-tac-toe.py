@@ -63,7 +63,7 @@ class TicTacToe:
         
         while True:
             #提示玩家输入
-            x = list(map(int, input(f"Player {player} turn" + "(please type in x and y position using comma in between):").split(",")))
+            x = list(map(int, input(f"Player {player}'s turn" + "(please type in x and y position using comma in between):").split(",")))
             if self.board[x[0] - 1][x[1] - 1] == '-':
                 self.board[x[0] - 1][x[1] - 1] = player
             else:
