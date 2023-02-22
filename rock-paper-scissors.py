@@ -17,19 +17,21 @@ class RockPaperScissors:
         else: 
             print("Draw, play again.")
     
-    def Speed_Up_Mode(self):
+    def Speed_Up_Mode(self, sec):
         
-        t = 5
+        t = sec
         timer = "{:02d}:{:02d}".format(0, t)
-        print(timer + "\r")
+        print(timer + "\r") 
         time.sleep(1)
         t = t - 1
+        if(t > 0):
+            self.Speed_Up_Mode(sec - 1) 
         
     def Game(self):
         """
         随机挑选玩家
         提示并记录玩家输入
-        X Vs. Y
+        X Vs. Y 
         判断输赢
             如输、赢，结束游戏
             如打平，继续游戏 
@@ -39,11 +41,17 @@ class RockPaperScissors:
         while True: 
              
             print("Press Space If You Want to Speed Up the Game :)")
-            #self.Speed_Up_Mode() if keyboard.wait('space') == True else print("Speed-Up Mode Disabled")
-            
-            if keyboard.wait('space') == False :
-                self.Speed_Up_Mode() 
-                print("Speed-Up Mode Enabled") 
+             
+            if keyboard.read_key() == 'space':
+                print("Speed-Up Mode Enabled")
+                player1 = 'X' if random.randint(0, 1) == 0 else 'Y'
+                #怎么让input和时间同时进行？
+                self.A = self.List[int(input(f"{player1}'s turn (1. Rock 2. Paper 3. Scissor):")) - 1] 
+                self.Speed_Up_Mode(5)
+                if [self.A != self.List[i] for i in range (3)]:
+                    print("Null, Game Ended")
+                    return False
+                 
             else:
                 print("Speed-Up Mode Disabled")
             
