@@ -1,6 +1,7 @@
 import random
 import keyboard
 import time
+import threading
 
 class RockPaperScissors:
     
@@ -17,16 +18,8 @@ class RockPaperScissors:
         else: 
             print("Draw, play again.")
     
-    def Speed_Up_Mode(self, sec):
-        
-        t = sec
-        timer = "{:02d}:{:02d}".format(0, t)
-        print(timer + "\r") 
-        time.sleep(1)
-        t = t - 1
-        if(t > 0):
-            self.Speed_Up_Mode(sec - 1) 
-        
+   
+    
     def Game(self):
         """
         随机挑选玩家
@@ -38,6 +31,17 @@ class RockPaperScissors:
         """
         print("Welcome to Game!")
         
+        def Speed_Up_Mode(self, sec):
+        
+            t = sec
+            timer = "{:02d}:{:02d}".format(0, t)
+            print(timer + "\r") 
+            time.sleep(1)
+            t = t - 1
+        
+            if(t > 0):
+                self.Speed_Up_Mode(sec - 1) 
+        
         while True: 
              
             print("Press Space If You Want to Speed Up the Game :)")
@@ -45,9 +49,10 @@ class RockPaperScissors:
             if keyboard.read_key() == 'space':
                 print("Speed-Up Mode Enabled")
                 player1 = 'X' if random.randint(0, 1) == 0 else 'Y'
-                #怎么让input和时间同时进行？
                 self.A = self.List[int(input(f"{player1}'s turn (1. Rock 2. Paper 3. Scissor):")) - 1] 
-                self.Speed_Up_Mode(5)
+                #怎么让input和时间同时进行？
+                thread = threading.Thread(target = Speed_Up_Mode, name = "Speed-Up-Mode", args=(5))
+                thread.start()
                 if [self.A != self.List[i] for i in range (3)]:
                     print("Null, Game Ended")
                     return False
