@@ -29,33 +29,39 @@ class RockPaperScissors:
             如输、赢，结束游戏
             如打平，继续游戏 
         """
-        print("Welcome to Game!")
         
-        def Speed_Up_Mode(self, sec):
+        stop = False
         
-            t = sec
-            timer = "{:02d}:{:02d}".format(0, t)
-            print(timer + "\r") 
-            time.sleep(1)
-            t = t - 1
+        def Speed_Up_Mode(sec,):
+            
+            if(stop == False):
+                t = sec
+                timer = "{:02d}:{:02d}".format(0, t)
+                print("\r" + timer )
+                time.sleep(1)
+                t = t - 1
         
             if(t > 0):
-                self.Speed_Up_Mode(sec - 1) 
+                Speed_Up_Mode(sec - 1) 
+            else:
+                print("Null, Game Ended")
+                return False
         
         while True: 
-             
+            
+            print("Welcome to Game! \n") 
             print("Press Space If You Want to Speed Up the Game :)")
              
             if keyboard.read_key() == 'space':
                 print("Speed-Up Mode Enabled")
                 player1 = 'X' if random.randint(0, 1) == 0 else 'Y'
                 self.A = self.List[int(input(f"{player1}'s turn (1. Rock 2. Paper 3. Scissor):")) - 1] 
-                #怎么让input和时间同时进行？
-                thread = threading.Thread(target = Speed_Up_Mode, name = "Speed-Up-Mode", args=(5))
+                #怎么让子线程检测到主线程进展？
+                thread = threading.Thread(target = Speed_Up_Mode, name = "Speed-Up-Mode", args=(5,))
                 thread.start()
-                if [self.A != self.List[i] for i in range (3)]:
-                    print("Null, Game Ended")
-                    return False
+                # if [self.A != self.List[i] for i in range (3)]:
+                #     print("Null, Game Ended")
+                #     return False
                  
             else:
                 print("Speed-Up Mode Disabled")
